@@ -13,6 +13,7 @@ sass:
   sass_dir: _sass
 plainwhite:
   name: Hyojin Kim
+  avatar: /assets/profile.png
   tagline: SW Engineer
   date_format: "%b %-d, %Y"
   sitemap: true # set to true to generate sitemap.xml content
