@@ -1,6 +1,6 @@
-title: Your awesome title
-author: GitHub User
-email: your-email@domain.com
+title: 차근차근
+author: Hyojin Kim
+email: khj960502@naver.com
 description: > # this means to ignore newlines until "show_exerpts:"
   Write an awesome description for your new site here. You can edit this
   line in _config.yml. It will appear in your document head meta (for
@@ -44,15 +44,20 @@ plainwhite:
     # - username: jekyll2
     #   instance: example.com
 
-# disqus
-disqus_shortname: github-blog-gc2soljrm7
-# google analytics
-analytics_id: "UA-159925886-1"
+  # disqus
+  disqus_shortname: github-blog-gc2soljrm7
+  # google analytics
+  analytics_id: "UA-159925886-1"
+  navigation:
+    #- title: About
+    #  url: "/https://hyojin52.github.io/about/"
+    - title: Posts
+      url: /year-archive/
 
 # If you want to link only specific pages in your header, uncomment
 # this and add the path to the pages in order as they should show up
-#header_pages:
-# - about.md
+# header_pages:
+#   - about.md
 
 # Build settings
 theme: plainwhite
