@@ -1,6 +1,6 @@
 ---
 title: "Categories"
-layout: categories
+layout: post
 permalink: /categories/
 author_profile: false
 ---

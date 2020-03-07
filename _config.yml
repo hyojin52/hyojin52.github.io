@@ -48,11 +48,14 @@ plainwhite:
   disqus_shortname: github-blog-gc2soljrm7
   # google analytics
   analytics_id: "UA-159925886-1"
+  # navigation
   navigation:
-    #- title: About
-    #  url: "/https://hyojin52.github.io/about/"
+    - title: About
+      url: /about/
     - title: Posts
       url: /year-archive/
+    - title: Categories
+      url: /hello/
 
 # If you want to link only specific pages in your header, uncomment
 # this and add the path to the pages in order as they should show up
