@@ -1,10 +1,11 @@
 ---
 title: "About"
-layout: post
+layout: page
 permalink: /about/
 ---
 
-## Introduction
+# About me
+
 Hello, I'm hyojin Kim! :-)   
 Thank you for having interests about this blog.   
 
