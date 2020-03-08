@@ -52,8 +52,8 @@ plainwhite:
   navigation:
     - title: About
       url: /about/
-    - title: Posts
-      url: /year-archive/
+  #  - title: Posts
+  #    url: /post/
   #  - title: Categories
   #    url: /hello/
 
