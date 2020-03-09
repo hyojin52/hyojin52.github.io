@@ -6,7 +6,7 @@ categories: Programmers Hash C++
 ---
 
 - 문제 유형: 해시_Key-value쌍으로 데이터를 저장하는 자료구조
-- 난이도: level_01 (약 15702명 완료)
+- 난이도: level_01 (약 15,702명 완료)
 - 사용 언어: C++ <br/><br/>
 
 ## 1. 문제
