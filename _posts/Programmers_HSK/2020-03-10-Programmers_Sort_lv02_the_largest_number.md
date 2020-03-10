@@ -38,7 +38,9 @@ string solution(vector<int> numbers) {
 <br/><br/>
 
 ## 2. 알고리즘! 생각해보자
-1)
+1) sort 함수에서 비교함수 customizing해서 정렬<br/>
+2) 가장 큰 수 만들어주기<br/>
+3) numbers의 값이 "모두 0"인 경우 예외처리
 <br/><br/>
 
 ## 3. 해결코드
@@ -47,48 +49,32 @@ string solution(vector<int> numbers) {
 ```c++
 #include <string>
 #include <vector>
-#include <stack>
 #include <algorithm>
 
 using namespace std;
 
+bool compare(int num1, int num2){
+    string temp1, temp2;
+
+    temp1 = to_string(num1);
+    temp2 = to_string(num2);
+
+    return temp1+temp2 > temp2+temp1;
+}
+
 string solution(vector<int> numbers) {
     string answer = "";
 
-    //1.각 자리수별(1, 10, 100, 1000) stack 생성
-    vector<int> one, two, three, four;
+    //1.numbers에 들어있는 값들 sort(비교함수 사용해서)
+    sort(numbers.begin(), numbers.end(), compare);
 
+    //2.가장 큰 숫자 만들어주기
     for(int i=0; i<numbers.size(); i++){
-        if(numbers[i]/1000 > 0 && numbers[i]/1000 < 10)
-            four.push_back(numbers[i]);
-        else if(numbers[i]/100 > 0 && numbers[i]/100 < 10)
-            three.push_back(numbers[i]);
-        else if(numbers[i]/10 > 0 && numbers[i]/10 < 10)
-            two.push_back(numbers[i]);
-        else
-            one.push_back(numbers[i]);
+        answer.append(to_string(numbers[i]));
     }
 
-    if(one.size()!=0) sort(one.begin(), one.end());
-    if(two.size()!=0) sort(two.begin(), two.end());
-    if(three.size()!=0) sort(three.begin(), three.end());
-    if(four.size()!=0) sort(four.begin(), four.end());   
-
-    //2. 각 스택에서 하나씩 pop해서 temp에 넣고 크기 비교 뒤, 숫자 생성하기
-    vector<int> temp;
-    for(int i=0; i<numbers.size(); i++){
-        if(one.size()!=0) temp[0] = one[one.size()-1];
-        else temp[0] = 0;
-
-        if(two.size()!=0) temp[1] = two[two.size()-1];
-        else temp[1] = 0;
-
-        if(three.size()!=0) temp[2] = three[three.size()-1];
-        else temp[2] = 0;
-
-        if(four.size()!=0) temp[3] = four[four.size()-1];
-        else temp[3] = 0;
-    }
+    //3. 모두 0인 예외 case 처리
+    if(answer[0] == '0') answer = '0';
 
     return answer;
 }
@@ -96,10 +82,12 @@ string solution(vector<int> numbers) {
 <br/>
 
 ## 4. 문제해결능력 UP! 되짚어보기
--
+- sort()의 compare하는 함수도 직접 변경 가능하다!!
+- 모두 해결했다고 생각했지만 끝이 아닐수도... 예외 case 생각하기
 
 <br/><br/>
 
 ## 5. References
-1) 공식 C++ References (<https://modoocode.com/241>)
+1)  sort 함수 활용한 정렬 (<https://twpower.github.io/71-use-sort-and-stable_sort-in-cpp>)<br/>
+2) 공식 C++ References (<https://modoocode.com/241>)
 <br/><br/>
