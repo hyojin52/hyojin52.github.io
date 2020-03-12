@@ -1,0 +1,121 @@
+I"/<ul>
+  <li>문제 유형: Stack/Queue</li>
+  <li>난이도: level_02 (약 7,959명 완료)</li>
+  <li>사용 언어: C++ <br /><br /></li>
+</ul>
+
+<h2 id="1-문제">1. 문제</h2>
+<h3 id="1-탑">1) 탑</h3>
+<p>수평 직선에 탑 N대를 세웠습니다. 모든 탑의 꼭대기에는 신호를 송/수신하는 장치를 설치했습니다. 발사한 신호는 신호를 보낸 탑보다 높은 탑에서만 수신합니다. 또한, 한 번 수신된 신호는 다른 탑으로 송신되지 않습니다.<br /></p>
+
+<p>예를 들어 높이가 6, 9, 5, 7, 4인 다섯 탑이 왼쪽으로 동시에 레이저 신호를 발사합니다. 그러면, 탑은 다음과 같이 신호를 주고받습니다. 높이가 4인 다섯 번째 탑에서 발사한 신호는 높이가 7인 네 번째 탑이 수신하고, 높이가 7인 네 번째 탑의 신호는 높이가 9인 두 번째 탑이, 높이가 5인 세 번째 탑의 신호도 높이가 9인 두 번째 탑이 수신합니다. 높이가 9인 두 번째 탑과 높이가 6인 첫 번째 탑이 보낸 레이저 신호는 어떤 탑에서도 수신할 수 없습니다.
+<br /></p>
+
+<table border="1" bordercolor="black" width="40%">
+  <tr style="background-color:#e3e3e3">
+    <th>송신탑(높이)</th>
+    <th>수신탑(높이)</th>
+  </tr>
+  <tr>
+    <td align="center">5(4)</td>
+    <td align="center">4(7)</td>
+  </tr>
+  <tr>
+    <td align="center">4(7)</td>
+    <td align="center">2(9)</td>
+  </tr>
+  <tr>
+    <td align="center">3(5)</td>
+    <td align="center">2(9)</td>
+  </tr>
+  <tr>
+    <td align="center">2(9)</td>
+    <td align="center">-</td>
+  </tr>
+  <tr>
+    <td align="center">1(6)</td>
+    <td align="center">-</td>
+  </tr>
+</table>
+
+<p>맨 왼쪽부터 순서대로 탑의 높이를 담은 배열 heights가 매개변수로 주어질 때 각 탑이 쏜 신호를 어느 탑에서 받았는지 기록한 배열을 return 하도록 solution 함수를 작성해주세요.
+<br /></p>
+
+<h3 id="2-제한사항">2) 제한사항</h3>
+<ul>
+  <li>heights는 길이 2 이상 100 이하인 정수 배열입니다.</li>
+  <li>모든 탑의 높이는 1 이상 100 이하입니다.</li>
+  <li>신호를 수신하는 탑이 없으면 0으로 표시합니다.</li>
+</ul>
+
+<h3 id="3-기본코드">3) 기본코드</h3>
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include &lt;string&gt;
+#include &lt;vector&gt;
+</span>
+<span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
+
+<span class="kt">int</span> <span class="nf">solution</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">numbers</span><span class="p">,</span> <span class="kt">int</span> <span class="n">target</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kt">int</span> <span class="n">answer</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="k">return</span> <span class="n">answer</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<p><br /><br /></p>
+
+<h2 id="2-알고리즘-생각해보자">2. 알고리즘! 생각해보자</h2>
+<p>1) 접근방법</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>answer++ &lt;- target==() &lt;- d+(c+(a+b)) &lt;- c+(a+b) &lt;- a+b
+그렇다면............... ================================: 계속 반복되는 부분
+&lt;--------base---------&gt;&lt;||||||||||recursive|||||||||||&gt;
+</code></pre></div></div>
+<p><br /><br /></p>
+
+<h2 id="3-해결코드">3. 해결코드</h2>
+<p>[C++]<br /></p>
+
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include &lt;string&gt;
+#include &lt;vector&gt;
+#include &lt;map&gt;
+</span>
+<span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
+
+<span class="kt">int</span> <span class="nf">recursive</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">arr</span><span class="p">,</span> <span class="kt">int</span> <span class="n">goal</span><span class="p">,</span> <span class="kt">int</span> <span class="n">sum</span><span class="p">){</span>
+    <span class="kt">int</span> <span class="n">temp</span><span class="p">;</span>
+
+    <span class="k">if</span><span class="p">(</span><span class="n">arr</span><span class="p">.</span><span class="n">size</span><span class="p">()</span> <span class="o">==</span> <span class="mi">0</span><span class="p">){</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">goal</span> <span class="o">==</span> <span class="n">sum</span><span class="p">){</span>
+            <span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="k">else</span><span class="p">{</span>
+            <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="k">else</span><span class="p">{</span>
+        <span class="n">temp</span> <span class="o">=</span> <span class="n">arr</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+        <span class="n">arr</span><span class="p">.</span><span class="n">erase</span><span class="p">(</span><span class="n">arr</span><span class="p">.</span><span class="n">begin</span><span class="p">());</span>
+        <span class="k">return</span> <span class="n">recursive</span><span class="p">(</span><span class="n">arr</span><span class="p">,</span> <span class="n">goal</span><span class="p">,</span> <span class="n">sum</span><span class="o">+</span><span class="n">temp</span><span class="p">)</span><span class="o">+</span><span class="n">recursive</span><span class="p">(</span><span class="n">arr</span><span class="p">,</span> <span class="n">goal</span><span class="p">,</span> <span class="n">sum</span><span class="o">-</span><span class="n">temp</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="nf">solution</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">numbers</span><span class="p">,</span> <span class="kt">int</span> <span class="n">target</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kt">int</span> <span class="n">answer</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+    <span class="n">answer</span> <span class="o">=</span> <span class="n">recursive</span><span class="p">(</span><span class="n">numbers</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+
+    <span class="k">return</span> <span class="n">answer</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<p><br /><br /></p>
+
+<h2 id="4-문제해결능력-up-되짚어보기">4. 문제해결능력 UP! 되짚어보기</h2>
+<ul>
+  <li>DFS(재귀함수, stack 주로 이용), BFS(queue 주로 이용)</li>
+  <li>재귀함수 느낌 코드로 나타낼 수 있으려면 어떻게 해야할까… ^^;
+<br /><br /></li>
+</ul>
+
+<h2 id="5-references">5. References</h2>
+<p>1) DFS 및 BFS 개념 (<a href="https://twpower.github.io/151-bfs-dfs-basic-problem">https://twpower.github.io/151-bfs-dfs-basic-problem</a>)<br />
+2) recursive 개념 및 예제 (<a href="https://excelsior-cjh.tistory.com/28">https://excelsior-cjh.tistory.com/28</a>)<br />
+3) 공식 C++ References (<a href="https://modoocode.com/241">https://modoocode.com/241</a>)
+<br /><br /></p>
+:ET

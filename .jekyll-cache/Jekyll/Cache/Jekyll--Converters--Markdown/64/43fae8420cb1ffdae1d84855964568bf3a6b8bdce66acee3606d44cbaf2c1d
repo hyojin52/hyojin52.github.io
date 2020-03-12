@@ -1,0 +1,96 @@
+I"<ul>
+  <li>문제 유형: Stack/Queue</li>
+  <li>난이도: level_02 (약 7,959명 완료)</li>
+  <li>사용 언어: C++ <br /><br /></li>
+</ul>
+
+<h2 id="1-문제">1. 문제</h2>
+<h3 id="1-타워">1) 타워</h3>
+<p>n개의 음이 아닌 정수가 있습니다. 이 수를 적절히 더하거나 빼서 타겟 넘버를 만들려고 합니다. 예를 들어 [1, 1, 1, 1, 1]로 숫자 3을 만들려면 다음 다섯 방법을 쓸 수 있습니다.<br /></p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>-1+1+1+1+1 = 3
++1-1+1+1+1 = 3
++1+1-1+1+1 = 3
++1+1+1-1+1 = 3
++1+1+1+1-1 = 3
+</code></pre></div></div>
+<p>사용할 수 있는 숫자가 담긴 배열 numbers, 타겟 넘버 target이 매개변수로 주어질 때 숫자를 적절히 더하고 빼서 타겟 넘버를 만드는 방법의 수를 return 하도록 solution 함수를 작성해주세요.
+<br /></p>
+
+<h3 id="2-제한사항">2) 제한사항</h3>
+<ul>
+  <li>주어지는 숫자의 개수는 2개 이상 20개 이하입니다.</li>
+  <li>각 숫자는 1 이상 50 이하인 자연수입니다.</li>
+  <li>타겟 넘버는 1 이상 1000 이하인 자연수입니다.</li>
+</ul>
+
+<h3 id="3-기본코드">3) 기본코드</h3>
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include &lt;string&gt;
+#include &lt;vector&gt;
+</span>
+<span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
+
+<span class="kt">int</span> <span class="nf">solution</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">numbers</span><span class="p">,</span> <span class="kt">int</span> <span class="n">target</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kt">int</span> <span class="n">answer</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="k">return</span> <span class="n">answer</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<p><br /><br /></p>
+
+<h2 id="2-알고리즘-생각해보자">2. 알고리즘! 생각해보자</h2>
+<p>1) 접근방법</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>answer++ &lt;- target==() &lt;- d+(c+(a+b)) &lt;- c+(a+b) &lt;- a+b
+그렇다면............... ================================: 계속 반복되는 부분
+&lt;--------base---------&gt;&lt;||||||||||recursive|||||||||||&gt;
+</code></pre></div></div>
+<p><br /><br /></p>
+
+<h2 id="3-해결코드">3. 해결코드</h2>
+<p>[C++]<br /></p>
+
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include &lt;string&gt;
+#include &lt;vector&gt;
+#include &lt;map&gt;
+</span>
+<span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
+
+<span class="kt">int</span> <span class="nf">recursive</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">arr</span><span class="p">,</span> <span class="kt">int</span> <span class="n">goal</span><span class="p">,</span> <span class="kt">int</span> <span class="n">sum</span><span class="p">){</span>
+    <span class="kt">int</span> <span class="n">temp</span><span class="p">;</span>
+
+    <span class="k">if</span><span class="p">(</span><span class="n">arr</span><span class="p">.</span><span class="n">size</span><span class="p">()</span> <span class="o">==</span> <span class="mi">0</span><span class="p">){</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">goal</span> <span class="o">==</span> <span class="n">sum</span><span class="p">){</span>
+            <span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="k">else</span><span class="p">{</span>
+            <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="k">else</span><span class="p">{</span>
+        <span class="n">temp</span> <span class="o">=</span> <span class="n">arr</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+        <span class="n">arr</span><span class="p">.</span><span class="n">erase</span><span class="p">(</span><span class="n">arr</span><span class="p">.</span><span class="n">begin</span><span class="p">());</span>
+        <span class="k">return</span> <span class="n">recursive</span><span class="p">(</span><span class="n">arr</span><span class="p">,</span> <span class="n">goal</span><span class="p">,</span> <span class="n">sum</span><span class="o">+</span><span class="n">temp</span><span class="p">)</span><span class="o">+</span><span class="n">recursive</span><span class="p">(</span><span class="n">arr</span><span class="p">,</span> <span class="n">goal</span><span class="p">,</span> <span class="n">sum</span><span class="o">-</span><span class="n">temp</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="nf">solution</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">numbers</span><span class="p">,</span> <span class="kt">int</span> <span class="n">target</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kt">int</span> <span class="n">answer</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+    <span class="n">answer</span> <span class="o">=</span> <span class="n">recursive</span><span class="p">(</span><span class="n">numbers</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+
+    <span class="k">return</span> <span class="n">answer</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<p><br /><br /></p>
+
+<h2 id="4-문제해결능력-up-되짚어보기">4. 문제해결능력 UP! 되짚어보기</h2>
+<ul>
+  <li>DFS(재귀함수, stack 주로 이용), BFS(queue 주로 이용)</li>
+  <li>재귀함수 느낌 코드로 나타낼 수 있으려면 어떻게 해야할까… ^^;
+<br /><br /></li>
+</ul>
+
+<h2 id="5-references">5. References</h2>
+<p>1) DFS 및 BFS 개념 (<a href="https://twpower.github.io/151-bfs-dfs-basic-problem">https://twpower.github.io/151-bfs-dfs-basic-problem</a>)<br />
+2) recursive 개념 및 예제 (<a href="https://excelsior-cjh.tistory.com/28">https://excelsior-cjh.tistory.com/28</a>)<br />
+3) 공식 C++ References (<a href="https://modoocode.com/241">https://modoocode.com/241</a>)
+<br /><br /></p>
+:ET
