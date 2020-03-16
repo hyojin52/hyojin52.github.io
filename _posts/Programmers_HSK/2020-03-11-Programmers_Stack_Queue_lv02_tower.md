@@ -1,11 +1,11 @@
 ---
 layout: post
-title: "Programmers 코딩 테스트 고득점 Kit_ [완전탐색] 탑"
+title: "Programmers 코딩 테스트 고득점 Kit_ [스택-큐] 탑"
 date: 2020-03-11
 categories: Programmers Stack-Queue C++
 ---
 
-- 문제 유형: Stack/Queue
+- 문제 유형: 스택-큐_LIFO-FIFO 자료형
 - 난이도: level_02 (약 7,959명 완료)
 - 사용 언어: C++ <br/><br/>
 
