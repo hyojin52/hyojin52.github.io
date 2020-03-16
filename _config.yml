@@ -1,5 +1,6 @@
 #site settings
 remote_theme: thelehhman/plainwhite-jekyll
+theme: plainwhite
 
 title: 차근차근
 author: Hyojin Kim
