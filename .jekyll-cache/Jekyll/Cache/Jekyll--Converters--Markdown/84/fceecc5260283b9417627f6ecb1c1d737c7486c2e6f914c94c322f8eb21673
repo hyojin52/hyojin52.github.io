@@ -1,0 +1,107 @@
+I"%!<ul>
+  <li>문제 유형: 힙_검색에 특화된 자료구조</li>
+  <li>난이도: level_02 (약 1,902명 완료)</li>
+  <li>사용 언어: C++ <br /><br /></li>
+</ul>
+
+<h2 id="1-문제">1. 문제</h2>
+<h3 id="1-라면공장">1) 라면공장</h3>
+<p>라면 공장에서는 하루에 밀가루를 1톤씩 사용합니다. 원래 밀가루를 공급받던 공장의 고장으로 앞으로 k일 이후에야 밀가루를 공급받을 수 있기 때문에 해외 공장에서 밀가루를 수입해야 합니다. 해외 공장에서는 향후 밀가루를 공급할 수 있는 날짜와 수량을 알려주었고, 라면 공장에서는 운송비를 줄이기 위해 최소한의 횟수로 밀가루를 공급받고 싶습니다.<br /></p>
+
+<p>현재 공장에 남아있는 밀가루 수량 stock, 밀가루 공급 일정(dates)과 해당 시점에 공급 가능한 밀가루 수량(supplies), 원래 공장으로부터 공급받을 수 있는 시점 k가 주어질 때, 밀가루가 떨어지지 않고 공장을 운영하기 위해서 최소한 몇 번 해외 공장으로부터 밀가루를 공급받아야 하는지를 return 하도록 solution 함수를 완성하세요.<br /></p>
+
+<p>dates[i]에는 i번째 공급 가능일이 들어있으며, supplies[i]에는 dates[i] 날짜에 공급 가능한 밀가루 수량이 들어 있습니다.
+<br /></p>
+
+<h3 id="2-제한사항">2) 제한사항</h3>
+<ul>
+  <li>stock에 있는 밀가루는 오늘(0일 이후)부터 사용됩니다.</li>
+  <li>stock과 k는 2 이상 100,000 이하입니다.</li>
+  <li>dates의 각 원소는 1 이상 k 이하입니다.</li>
+  <li>supplies의 각 원소는 1 이상 1,000 이하입니다.</li>
+  <li>dates와 supplies의 길이는 1 이상 20,000 이하입니다.</li>
+  <li>k일 째에는 밀가루가 충분히 공급되기 때문에 k-1일에 사용할 수량까지만 확보하면 됩니다.</li>
+  <li>dates에 들어있는 날짜는 오름차순 정렬되어 있습니다.</li>
+  <li>dates에 들어있는 날짜에 공급되는 밀가루는 작업 시작 전 새벽에 공급되는 것을 기준으로 합니다. 예를 들어 9일째에 밀가루가 바닥나더라도, 10일째에 공급받으면 10일째에는 공장을 운영할 수 있습니다.</li>
+  <li>밀가루가 바닥나는 경우는 주어지지 않습니다.</li>
+</ul>
+
+<h3 id="3-기본코드">3) 기본코드</h3>
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include &lt;string&gt;
+#include &lt;vector&gt;
+</span>
+<span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
+
+<span class="kt">int</span> <span class="nf">solution</span><span class="p">(</span><span class="kt">int</span> <span class="n">stock</span><span class="p">,</span> <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">dates</span><span class="p">,</span> <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">supplies</span><span class="p">,</span> <span class="kt">int</span> <span class="n">k</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kt">int</span> <span class="n">answer</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="k">return</span> <span class="n">answer</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<p><br /><br /></p>
+
+<h2 id="2-알고리즘-생각해보자">2. 알고리즘! 생각해보자</h2>
+<p>방법 1.(해결코드에서 사용한 방법)<br />
+“<u>최대로 공급할 수 있는 양을 찾아 공급한다면 최소로 공급받을 수 있음</u>“<br />
+이 때, 공급량 비교할 dates를 어떻게 구분할까?<br />
+=&gt; K개 밀가루를 공급받지 못했다면, (반복)현재 stock 내에서 공급받을 수 있는 모든 날짜들 확인해서 최대로 공급할 수 있는 양을 찾기<br /></p>
+
+<p>방법 2.
+“<u>최대로 공급할 수 있는 양을 찾아 공급한다면 최소로 공급받을 수 있음</u>“<br />
+K일이 될 때까지 매일 <u>아래 루틴</u>을 반복</p>
+<ul>
+  <li>
+    <p>stock 1 씩 감소</p>
+  </li>
+  <li>공급받을 수 있는 날이 되면 공급량 heap에 추가</li>
+  <li>만약 stock이 0이 되면, heap에서 top만큼 추가해주고 heap에서 삭제</li>
+</ul>
+
+<p><br /><br /></p>
+
+<h2 id="3-해결코드">3. 해결코드</h2>
+<p>[C++]<br /></p>
+
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include &lt;string&gt;
+#include &lt;vector&gt;
+#include &lt;queue&gt;
+</span>
+<span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
+
+<span class="kt">int</span> <span class="nf">solution</span><span class="p">(</span><span class="kt">int</span> <span class="n">stock</span><span class="p">,</span> <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">dates</span><span class="p">,</span> <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">supplies</span><span class="p">,</span> <span class="kt">int</span> <span class="n">k</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kt">int</span> <span class="n">answer</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+    <span class="n">priority_queue</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">prediction</span><span class="p">;</span>
+
+    <span class="c1">//1. K개 밀가루를 공급받지 못했다면, 아래 반복</span>
+    <span class="kt">int</span> <span class="n">dates_idx</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>  
+    <span class="k">while</span><span class="p">(</span><span class="n">stock</span> <span class="o">&lt;</span> <span class="n">k</span><span class="p">){</span>
+        <span class="c1">// 2. 현재 stock 내에서 공급받을 수 있는 모든 공급량들 힙에 넣기</span>
+        <span class="k">while</span><span class="p">(</span><span class="n">dates</span><span class="p">[</span><span class="n">dates_idx</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">stock</span> <span class="o">&amp;&amp;</span> <span class="n">dates_idx</span> <span class="o">&lt;</span> <span class="n">dates</span><span class="p">.</span><span class="n">size</span><span class="p">()){</span>
+            <span class="n">prediction</span><span class="p">.</span><span class="n">push</span><span class="p">(</span><span class="n">supplies</span><span class="p">[</span><span class="n">dates_idx</span><span class="o">++</span><span class="p">]);</span>
+        <span class="p">}</span>
+        <span class="c1">//3.max heap에서 최대로 공급할 수 있는 양(root의 값)을 stock에 추가</span>
+        <span class="n">stock</span> <span class="o">+=</span> <span class="n">prediction</span><span class="p">.</span><span class="n">top</span><span class="p">();</span>
+        <span class="n">prediction</span><span class="p">.</span><span class="n">pop</span><span class="p">();</span>
+
+        <span class="c1">//4. 공급받았으니 asnwer 증가</span>
+        <span class="n">answer</span><span class="o">++</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">return</span> <span class="n">answer</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<p><br /><br /></p>
+
+<h2 id="4-문제해결능력-up-되짚어보기">4. 문제해결능력 UP! 되짚어보기</h2>
+<ul>
+  <li>여러가지 방법으로 해결해보기(방법 2.등)
+<br /><br /></li>
+</ul>
+
+<h2 id="5-references">5. References</h2>
+<p>1) Heap 개념 (<a href="https://reakwon.tistory.com/42">https://reakwon.tistory.com/42</a>)
+2) C++ Heap 구현 (<a href="https://twpower.github.io/137-heap-implementation-in-cp">https://twpower.github.io/137-heap-implementation-in-cp</a>)
+3) C++ heap과 관련된 함수 (<a href="https://openmynotepad.tistory.com/35">https://openmynotepad.tistory.com/35</a>)
+2) 공식 C++ References (<a href="https://modoocode.com/241">https://modoocode.com/241</a>)
+<br /><br /></p>
+:ET
