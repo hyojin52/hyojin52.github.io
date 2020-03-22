@@ -16,9 +16,9 @@ show_excerpts: true # set to true to show excerpts on the homepage
 sass:
   sass_dir: _sass
 plainwhite:
-  name: Hyojin Kim
+  name: Hyojin :-)
   avatar: /assets/profile.png
-  tagline: SW Engineer
+  tagline: #SW Engineer
   date_format: "%b %-d, %Y"
   sitemap: true # set to true to generate sitemap.xml content
 
@@ -56,8 +56,10 @@ plainwhite:
   navigation:
     - title: About
       url: /about/
-  #  - title: Posts
-  #    url: /post/
+    - title: Posts
+      url: /
+  #  - title: Tags
+  #    url: /tags/
   #  - title: Categories
   #    url: /hello/
 
