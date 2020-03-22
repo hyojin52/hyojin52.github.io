@@ -1,0 +1,137 @@
+I"�'<ul>
+  <li>문제 유형: Greedy_부분 최적해가 전체 최적해가 되는 알고리즘</li>
+  <li>난이도: level_02 (약 1,649명 완료)</li>
+  <li>사용 언어: C++ <br /><br /></li>
+</ul>
+
+<h2 id="1-문제">1. 문제</h2>
+<h3 id="1-조이스틱">1) 조이스틱</h3>
+<p>조이스틱으로 알파벳 이름을 완성하세요. 맨 처음엔 A로만 이루어져 있습니다.
+ex) 완성해야 하는 이름이 세 글자면 AAA, 네 글자면 AAAA</p>
+
+<p>조이스틱을 각 방향으로 움직이면 아래와 같습니다.</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>▲ - 다음 알파벳
+▼ - 이전 알파벳 (A에서 아래쪽으로 이동하면 Z로)
+◀ - 커서를 왼쪽으로 이동 (첫 번째 위치에서 왼쪽으로 이동하면 마지막 문자에 커서)
+▶ - 커서를 오른쪽으로 이동
+</code></pre></div></div>
+
+<p>예를 들어 아래의 방법으로 JAZ를 만들 수 있습니다.</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>- 첫 번째 위치에서 조이스틱을 위로 9번 조작하여 J를 완성합니다.
+- 조이스틱을 왼쪽으로 1번 조작하여 커서를 마지막 문자 위치로 이동시킵니다.
+- 마지막 위치에서 조이스틱을 아래로 1번 조작하여 Z를 완성합니다.
+따라서 11번 이동시켜 "JAZ"를 만들 수 있고, 이때가 최소 이동입니다.
+</code></pre></div></div>
+
+<p>만들고자 하는 이름 name이 매개변수로 주어질 때, 이름에 대해 조이스틱 조작 횟수의 최솟값을 return 하도록 solution 함수를 만드세요.
+<br /></p>
+
+<h3 id="2-제한사항">2) 제한사항</h3>
+<ul>
+  <li>name은 알파벳 대문자로만 이루어져 있습니다.</li>
+  <li>name의 길이는 1 이상 20 이하입니다.</li>
+</ul>
+
+<h3 id="3-기본코드">3) 기본코드</h3>
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include &lt;string&gt;
+#include &lt;vector&gt;
+</span>
+<span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
+
+<span class="kt">int</span> <span class="nf">solution</span><span class="p">(</span><span class="n">string</span> <span class="n">name</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kt">int</span> <span class="n">answer</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="k">return</span> <span class="n">answer</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<p><br /><br /></p>
+
+<h2 id="2-알고리즘-생각해보자">2. 알고리즘! 생각해보자</h2>
+<p>“각 알파벳의 최소 커서이동, 최소 알파벳 변경되는 경우를 찾자!”</p>
+
+<p>1) 최소 알파벳 변경되는 경우: A에서 해당 알파벳까지 거리, Z에서 해당 알파벳까지 거리 비교
+2) 최소 커서이동되는 경우: forward 및 backward 방향 거리 비교(단, 예외상황 처리)</p>
+<ul>
+  <li>‘A’가 처음에 연속으로 나오는 경우</li>
+  <li>문자열이 마지막에 AA***로 끝나고, 마지막 커서이동이 backward로 이루어진 경우</li>
+</ul>
+
+<p><br /><br /></p>
+
+<h2 id="3-해결코드">3. 해결코드</h2>
+<p>[C++]<br /></p>
+
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include &lt;string&gt;
+#include &lt;vector&gt;
+</span>
+<span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
+
+<span class="kt">int</span> <span class="nf">solution</span><span class="p">(</span><span class="n">string</span> <span class="n">name</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kt">int</span> <span class="n">answer</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+    <span class="kt">int</span> <span class="n">a_cnt</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">forward</span><span class="p">,</span> <span class="n">backward</span><span class="p">;</span>
+    <span class="kt">bool</span> <span class="n">back</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
+
+    <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">i</span><span class="o">&lt;</span><span class="n">name</span><span class="p">.</span><span class="n">size</span><span class="p">();</span> <span class="n">i</span><span class="o">++</span><span class="p">){</span>     
+
+        <span class="k">if</span><span class="p">(</span><span class="n">name</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">!=</span><span class="sc">'A'</span><span class="p">){</span>
+
+            <span class="c1">//1.최소 알파벳 변경되는 경우</span>
+            <span class="k">if</span><span class="p">((</span><span class="kt">int</span><span class="p">)</span><span class="n">name</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">-</span><span class="sc">'A'</span> <span class="o">&lt;=</span> <span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="sc">'Z'</span><span class="o">-</span><span class="n">name</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">+</span><span class="mi">1</span><span class="p">){</span>
+                <span class="n">answer</span> <span class="o">+=</span> <span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="n">name</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">-</span><span class="sc">'A'</span><span class="p">;</span>
+            <span class="p">}</span>
+            <span class="k">else</span><span class="p">{</span>
+                <span class="n">answer</span> <span class="o">+=</span> <span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="sc">'Z'</span><span class="o">-</span><span class="n">name</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">+</span><span class="mi">1</span><span class="p">;</span>
+            <span class="p">}</span>
+
+            <span class="c1">//2.최소 커서이동되는 경우</span>
+            <span class="c1">//(예외 처리) 'A'가 처음에 연속으로 나오는 경우</span>
+            <span class="k">if</span><span class="p">(</span><span class="n">i</span> <span class="o">==</span> <span class="n">a_cnt</span><span class="p">){</span>
+                <span class="n">forward</span> <span class="o">=</span> <span class="n">a_cnt</span><span class="p">;</span>
+                <span class="n">backward</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+            <span class="p">}</span>
+            <span class="k">else</span><span class="p">{</span>
+                <span class="n">forward</span> <span class="o">=</span> <span class="mi">1</span><span class="o">+</span><span class="n">a_cnt</span><span class="p">;</span>
+                <span class="n">backward</span> <span class="o">=</span> <span class="n">i</span><span class="o">-</span><span class="n">a_cnt</span><span class="p">;</span>
+            <span class="p">}</span>
+
+            <span class="k">if</span><span class="p">(</span><span class="n">backward</span> <span class="o">&lt;</span> <span class="n">forward</span><span class="p">){</span>
+                <span class="n">answer</span> <span class="o">+=</span> <span class="n">backward</span><span class="p">;</span>
+                <span class="n">back</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
+            <span class="p">}</span>
+            <span class="k">else</span><span class="p">{</span>
+                <span class="n">answer</span> <span class="o">+=</span> <span class="n">forward</span><span class="p">;</span>
+                <span class="n">back</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
+            <span class="p">}</span>
+
+            <span class="n">a_cnt</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="k">else</span><span class="p">{</span>
+            <span class="n">a_cnt</span><span class="o">++</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="c1">//(예외처리) 문자열이 마지막에 AA***로 끝나고, 마지막 커서이동이 backward로 이루어진 경우</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">back</span> <span class="o">&amp;&amp;</span> <span class="n">a_cnt</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">){</span>
+        <span class="n">answer</span> <span class="o">+=</span> <span class="n">a_cnt</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">return</span> <span class="n">answer</span><span class="p">;</span>
+<span class="p">}</span>
+
+</code></pre></div></div>
+<p><br /><br /></p>
+
+<h2 id="4-문제해결능력-up-되짚어보기">4. 문제해결능력 UP! 되짚어보기</h2>
+<ul>
+  <li>과연 이 문제가 Greedy 알고리즘에 해당하는 문제일까?
+(부분 최적해가 전체 최적해가 되지 않은 것 같은데…)</li>
+</ul>
+
+<p><br /><br /></p>
+
+<h2 id="5-references">5. References</h2>
+<p>1) <a href="https://0pencoding.github.io/%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%A8%B8%EC%8A%A4%EA%B3%A0%EB%93%9D%EC%A0%90kit/greedy/level2/algorithm/c++/2020/03/21/%ED%83%90%EC%9A%95%EB%B2%95_%EC%A1%B0%EC%9D%B4%EC%8A%A4%ED%8B%B1_level2.html">좀 더 현명한 해결책</a>
+2) 공식 C++ References (<a href="https://modoocode.com/241">https://modoocode.com/241</a>)
+<br /><br /></p>
+:ET
