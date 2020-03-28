@@ -36,16 +36,16 @@ string solution(string number, int k) {
 <br/><br/>
 
 ## 2. 알고리즘! 생각해보자
-Greedy -> 비교가 중요 -> 해당 문제에서는 <u>숫자 크기 비교</u> => 가장 큰 수 찾기
-  - 가장 큰 수 찾기 위한 "숫자 비교 범위"는? <u>k(제거해야 할 수의 개수)+1</u> 범위에서 가장 큰 수 찾기   
+Greedy -> 비교가 중요 -> (해당 문제) <u>숫자 크기 비교</u> => 가장 큰 수 찾기<br/>
+THEN.. 가장 큰 수 찾기 위한 "숫자 비교 범위"는? **"k+1"** <br/>
 
-1) 범위 내에서 가장 큰 수 찾기
-2) 가장 큰 수 이전 숫자는 제거(동시에 ```k--```), 가장 큰 수는 answer에 append
-3) 찾은 가장 큰 수 다음 수부터 범위 내에서 가장 큰 수 찾는 것 반복
+1) 범위 내에서 가장 큰 수 찾기<br/>
+2) 가장 큰 수 이전 숫자는 제거(동시에 ```k--```), 가장 큰 수는 answer에 append<br/>
+3) 찾은 가장 큰 수 다음 수부터 범위 내에서 가장 큰 수 찾는 것 반복<br/>
 
-number를 모두 비교하지 않았는데 k개를 모두 제거한 경우, answer의 size를 확인
-예외처리 1. size가 == <u>number.size()-k</u>라면, break
-예외처리 2. size가 < <u>number.size()-k</u>라면, number에서 비교되지 않은 남은 수들을 그대로 concat
+number를 모두 비교하지 않았는데 k개를 모두 제거한 경우, **answer의 size** 확인<br/>
+예외처리 1. answer.size() **==** number.size()-k< -> break<br/>
+예외처리 2. answer.size() **<** number.size()-k -> number에서 비교되지 않은 남은 수들을 그대로 concat
 
 <br/><br/>
 
