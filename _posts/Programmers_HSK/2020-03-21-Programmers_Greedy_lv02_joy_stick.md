@@ -3,6 +3,7 @@ layout: post
 title: "Programmers 코딩 테스트 고득점 Kit_ [Greedy] 조이스틱"
 date: 2020-03-21
 categories: Programmers Greedy C++
+toc: true
 ---
 
 - 문제 유형: Greedy_부분 최적해가 전체 최적해가 되는 알고리즘
