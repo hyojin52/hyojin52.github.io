@@ -1,0 +1,140 @@
+I"lB<ul>
+  <li>문제 유형: 해시_Key-value쌍으로 데이터를 저장하는 자료구조</li>
+  <li>난이도: level_03 (약 4,235명 완료)</li>
+  <li>사용 언어: C++ <br /><br /></li>
+</ul>
+
+<h2 id="1-문제">1. 문제</h2>
+<h3 id="1-베스트-앨범">1) 베스트 앨범</h3>
+<p>스트리밍 사이트에서 장르 별로 가장 많이 재생된 노래를 두 개씩 모아 베스트 앨범을 출시하려 합니다. 노래는 고유 번호로 구분하며, 노래를 수록하는 기준은 다음과 같습니다.<br /></p>
+
+<ol>
+  <li>속한 노래가 많이 재생된 장르를 먼저 수록합니다.</li>
+  <li>장르 내에서 많이 재생된 노래를 먼저 수록합니다.</li>
+  <li>장르 내에서 재생 횟수가 같은 노래 중에서는 고유 번호가 낮은 노래를 먼저 수록합니다.</li>
+</ol>
+
+<p>노래의 장르를 나타내는 문자열 배열 genres와 노래별 재생 횟수를 나타내는 정수 배열 plays가 주어질 때, 베스트 앨범에 들어갈 노래의 고유 번호를 순서대로 return 하도록 solution 함수를 완성하세요.
+<br /></p>
+
+<h3 id="2-제한사항">2) 제한사항</h3>
+<ul>
+  <li>genres[i]는 고유번호가 i인 노래의 장르입니다.</li>
+  <li>plays[i]는 고유번호가 i인 노래가 재생된 횟수입니다.</li>
+  <li>genres와 plays의 길이는 같으며, 이는 1 이상 10,000 이하입니다.</li>
+  <li>장르 종류는 100개 미만입니다.</li>
+  <li>장르에 속한 곡이 하나라면, 하나의 곡만 선택합니다.</li>
+  <li>모든 장르는 재생된 횟수가 다릅니다.</li>
+</ul>
+
+<h3 id="3-기본코드">3) 기본코드</h3>
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include &lt;string&gt;
+#include &lt;vector&gt;
+</span>
+<span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
+
+<span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">solution</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">genres</span><span class="p">,</span> <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">plays</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">answer</span><span class="p">;</span>
+    <span class="k">return</span> <span class="n">answer</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<p><br /><br /></p>
+
+<h2 id="2-알고리즘-생각해보자">2. 알고리즘! 생각해보자</h2>
+<p>문제 유형이 hash이고, “장르별 정렬, 재생횟수별 정렬”을 수행해야하므로 아래와 같은 자료구조의 필요성을 느낌<br /></p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  장 르 |- 고유번호 - 재생횟수&lt;br/&gt;
+        |- 고유번호 - 재생횟수&lt;br/&gt;
+        |- 고유번호 - 재생횟수&lt;br/&gt;
+    ''        ''         ''
+    ''        ''         ''
+    ''        ''         ''
+</code></pre></div></div>
+<p>하지만… C++ 언어에 대한 부족한 이해로 인해 결국 set과 multimap, vector 등 다양한 자료구조를 이용하여 문제를 해결(너무 비효율적인 낭비가 많았던 코드라 반성해야 된다…ㅠ)</p>
+
+<p>1)
+<br /><br /></p>
+
+<h2 id="3-해결코드">3. 해결코드</h2>
+<p>[C++]<br /></p>
+
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include &lt;string&gt;
+#include &lt;vector&gt;
+#include &lt;map&gt;
+#include &lt;set&gt;
+#include &lt;algorithm&gt;
+</span>
+<span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
+
+<span class="kt">bool</span> <span class="nf">cmp1</span><span class="p">(</span><span class="k">const</span> <span class="n">pair</span><span class="o">&lt;</span><span class="kt">int</span><span class="p">,</span> <span class="n">string</span><span class="o">&gt;&amp;</span> <span class="n">l</span><span class="p">,</span> <span class="k">const</span> <span class="n">pair</span><span class="o">&lt;</span><span class="kt">int</span><span class="p">,</span> <span class="n">string</span><span class="o">&gt;&amp;</span> <span class="n">r</span><span class="p">){</span>
+    <span class="k">return</span> <span class="n">l</span><span class="p">.</span><span class="n">first</span><span class="o">&gt;</span><span class="n">r</span><span class="p">.</span><span class="n">first</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">bool</span> <span class="nf">cmp2</span><span class="p">(</span><span class="k">const</span> <span class="n">pair</span><span class="o">&lt;</span><span class="kt">int</span><span class="p">,</span> <span class="kt">int</span><span class="o">&gt;&amp;</span> <span class="n">l</span><span class="p">,</span> <span class="k">const</span> <span class="n">pair</span><span class="o">&lt;</span><span class="kt">int</span><span class="p">,</span> <span class="kt">int</span><span class="o">&gt;&amp;</span> <span class="n">r</span><span class="p">){</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">l</span><span class="p">.</span><span class="n">first</span> <span class="o">==</span> <span class="n">r</span><span class="p">.</span><span class="n">first</span><span class="p">)</span> <span class="k">return</span> <span class="n">l</span><span class="p">.</span><span class="n">second</span><span class="o">&lt;</span><span class="n">r</span><span class="p">.</span><span class="n">second</span><span class="p">;</span>
+    <span class="k">return</span> <span class="n">l</span><span class="p">.</span><span class="n">first</span><span class="o">&gt;</span><span class="n">r</span><span class="p">.</span><span class="n">first</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">solution</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">genres</span><span class="p">,</span> <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">plays</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">answer</span><span class="p">;</span>
+
+    <span class="n">set</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">gen</span><span class="p">;</span>
+    <span class="n">set</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;::</span><span class="n">iterator</span> <span class="n">sit</span><span class="p">;</span>
+    <span class="n">multimap</span><span class="o">&lt;</span><span class="n">string</span><span class="p">,</span> <span class="kt">int</span><span class="o">&gt;</span> <span class="n">gen_id</span><span class="p">;</span>
+    <span class="n">multimap</span><span class="o">&lt;</span><span class="n">string</span><span class="p">,</span> <span class="kt">int</span><span class="o">&gt;::</span><span class="n">iterator</span> <span class="n">mit</span><span class="p">;</span>
+    <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">i</span><span class="o">&lt;</span><span class="n">genres</span><span class="p">.</span><span class="n">size</span><span class="p">();</span> <span class="n">i</span><span class="o">++</span><span class="p">){</span>
+        <span class="n">gen</span><span class="p">.</span><span class="n">insert</span><span class="p">(</span><span class="n">genres</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
+        <span class="n">gen_id</span><span class="p">.</span><span class="n">insert</span><span class="p">(</span><span class="n">make_pair</span><span class="p">(</span><span class="n">genres</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">i</span><span class="p">));</span>
+    <span class="p">}</span>
+
+    <span class="n">vector</span><span class="o">&lt;</span><span class="n">pair</span><span class="o">&lt;</span><span class="kt">int</span><span class="p">,</span> <span class="n">string</span><span class="o">&gt;&gt;</span> <span class="n">rank_gen</span><span class="p">;</span>
+    <span class="n">vector</span><span class="o">&lt;</span><span class="n">pair</span><span class="o">&lt;</span><span class="kt">int</span><span class="p">,</span> <span class="kt">int</span><span class="o">&gt;&gt;</span> <span class="n">rank_plays</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">idx</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="k">for</span><span class="p">(</span><span class="n">sit</span><span class="o">=</span><span class="n">gen</span><span class="p">.</span><span class="n">begin</span><span class="p">();</span> <span class="n">sit</span><span class="o">!=</span><span class="n">gen</span><span class="p">.</span><span class="n">end</span><span class="p">();</span> <span class="n">sit</span><span class="o">++</span><span class="p">){</span>
+        <span class="n">rank_gen</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">make_pair</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="o">*</span><span class="n">sit</span><span class="p">));</span>
+        <span class="k">for</span><span class="p">(</span><span class="n">mit</span> <span class="o">=</span> <span class="n">gen_id</span><span class="p">.</span><span class="n">lower_bound</span><span class="p">(</span><span class="o">*</span><span class="n">sit</span><span class="p">);</span> <span class="n">mit</span> <span class="o">!=</span> <span class="n">gen_id</span><span class="p">.</span><span class="n">upper_bound</span><span class="p">(</span><span class="o">*</span><span class="n">sit</span><span class="p">);</span> <span class="n">mit</span><span class="o">++</span><span class="p">){</span>
+            <span class="p">(</span><span class="n">rank_gen</span><span class="p">.</span><span class="n">end</span><span class="p">()</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">first</span> <span class="o">+=</span> <span class="n">plays</span><span class="p">[</span><span class="n">mit</span><span class="o">-&gt;</span><span class="n">second</span><span class="p">];</span>
+            <span class="n">rank_plays</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">make_pair</span><span class="p">(</span><span class="n">plays</span><span class="p">[</span><span class="n">mit</span><span class="o">-&gt;</span><span class="n">second</span><span class="p">],</span> <span class="n">mit</span><span class="o">-&gt;</span><span class="n">second</span><span class="p">));</span>
+        <span class="p">}</span>
+        <span class="n">sort</span><span class="p">(</span><span class="n">rank_plays</span><span class="p">.</span><span class="n">begin</span><span class="p">()</span><span class="o">+</span><span class="n">idx</span><span class="p">,</span> <span class="n">rank_plays</span><span class="p">.</span><span class="n">begin</span><span class="p">()</span><span class="o">+</span><span class="n">idx</span><span class="o">+</span><span class="n">gen_id</span><span class="p">.</span><span class="n">count</span><span class="p">(</span><span class="o">*</span><span class="n">sit</span><span class="p">),</span> <span class="n">cmp2</span><span class="p">);</span>
+        <span class="n">idx</span> <span class="o">+=</span> <span class="n">gen_id</span><span class="p">.</span><span class="n">count</span><span class="p">(</span><span class="o">*</span><span class="n">sit</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="n">sort</span><span class="p">(</span><span class="n">rank_gen</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span> <span class="n">rank_gen</span><span class="p">.</span><span class="n">end</span><span class="p">(),</span> <span class="n">cmp1</span><span class="p">);</span>
+
+    <span class="n">string</span> <span class="n">genre</span><span class="p">;</span>
+    <span class="k">for</span><span class="p">(</span><span class="k">auto</span><span class="o">&amp;</span> <span class="n">id</span><span class="o">:</span><span class="n">rank_gen</span><span class="p">){</span>
+        <span class="n">idx</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="n">genre</span> <span class="o">=</span> <span class="n">genres</span><span class="p">[</span><span class="n">rank_plays</span><span class="p">.</span><span class="n">begin</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">second</span><span class="p">];</span>
+        <span class="k">while</span><span class="p">(</span><span class="n">id</span><span class="p">.</span><span class="n">second</span> <span class="o">!=</span> <span class="n">genre</span><span class="p">){</span>
+            <span class="n">idx</span> <span class="o">+=</span> <span class="n">gen_id</span><span class="p">.</span><span class="n">count</span><span class="p">(</span><span class="n">genre</span><span class="p">);</span>
+            <span class="n">genre</span> <span class="o">=</span> <span class="n">genres</span><span class="p">[(</span><span class="n">rank_plays</span><span class="p">.</span><span class="n">begin</span><span class="p">()</span><span class="o">+</span><span class="n">idx</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">second</span><span class="p">];</span>
+        <span class="p">}</span>
+
+        <span class="k">if</span><span class="p">(</span><span class="n">gen_id</span><span class="p">.</span><span class="n">count</span><span class="p">(</span><span class="n">id</span><span class="p">.</span><span class="n">second</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="n">answer</span><span class="p">.</span><span class="n">push_back</span><span class="p">((</span><span class="n">rank_plays</span><span class="p">.</span><span class="n">begin</span><span class="p">()</span><span class="o">+</span><span class="n">idx</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">second</span><span class="p">);</span>
+        <span class="k">else</span><span class="p">{</span>
+            <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">i</span><span class="o">&lt;</span><span class="mi">2</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
+                <span class="n">answer</span><span class="p">.</span><span class="n">push_back</span><span class="p">((</span><span class="n">rank_plays</span><span class="p">.</span><span class="n">begin</span><span class="p">()</span><span class="o">+</span><span class="n">idx</span><span class="o">+</span><span class="n">i</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">second</span><span class="p">);</span>
+        <span class="p">}</span>         
+    <span class="p">}</span>
+
+    <span class="k">return</span> <span class="n">answer</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<p><br /><br /></p>
+
+<h2 id="4-문제해결능력-up-되짚어보기">4. 문제해결능력 UP! 되짚어보기</h2>
+<ul>
+  <li>의상 조합 경우의 수 계산_ 단순하게 생각하기!</li>
+  <li>map과 set의 연관성 생각해보기<br />
+- map: key와 value pair<br />
+- set: key 값들</li>
+</ul>
+
+<p><br /><br /></p>
+
+<h2 id="5-references">5. References</h2>
+<p>1) <a href="https://withhamit.tistory.com/195">sort 함수 커스텀</a>
+2) <a href="https://gamdekong.tistory.com/73">컨테이너 종류 및 hash_map</a>
+2) <a href="https://modoocode.com/241">공식 C++ References</a>
+<br /><br /></p>
+:ET

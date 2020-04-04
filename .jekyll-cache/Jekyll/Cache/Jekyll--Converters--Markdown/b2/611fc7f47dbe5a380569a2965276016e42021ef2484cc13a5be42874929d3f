@@ -1,0 +1,96 @@
+I"<ul>
+  <li>문제 유형: 해시_Key-value쌍으로 데이터를 저장하는 자료구조</li>
+  <li>난이도: level_03 (약 4,235명 완료)</li>
+  <li>사용 언어: C++ <br /><br /></li>
+</ul>
+
+<h2 id="1-문제">1. 문제</h2>
+<h3 id="1-베스트-앨범">1) 베스트 앨범</h3>
+<p>스트리밍 사이트에서 장르 별로 가장 많이 재생된 노래를 두 개씩 모아 베스트 앨범을 출시하려 합니다. 노래는 고유 번호로 구분하며, 노래를 수록하는 기준은 다음과 같습니다.<br /></p>
+
+<ol>
+  <li>속한 노래가 많이 재생된 장르를 먼저 수록합니다.</li>
+  <li>장르 내에서 많이 재생된 노래를 먼저 수록합니다.</li>
+  <li>장르 내에서 재생 횟수가 같은 노래 중에서는 고유 번호가 낮은 노래를 먼저 수록합니다.</li>
+</ol>
+
+<p>노래의 장르를 나타내는 문자열 배열 genres와 노래별 재생 횟수를 나타내는 정수 배열 plays가 주어질 때, 베스트 앨범에 들어갈 노래의 고유 번호를 순서대로 return 하도록 solution 함수를 완성하세요.
+<br /></p>
+
+<h3 id="2-제한사항">2) 제한사항</h3>
+<ul>
+  <li>clothes의 각 행은 [의상의 이름, 의상의 종류]로 이루어져 있습니다.</li>
+  <li>스파이가 가진 의상의 수는 1개 이상 30개 이하입니다.</li>
+  <li>같은 이름을 가진 의상은 존재하지 않습니다.</li>
+  <li>clothes의 모든 원소는 문자열로 이루어져 있습니다.</li>
+  <li>모든 문자열의 길이는 1 이상 20 이하인 자연수이고 알파벳 소문자 또는 ‘_’ 로만 이루어져 있습니다.</li>
+  <li>스파이는 하루에 최소 한 개의 의상은 입습니다.</li>
+</ul>
+
+<h3 id="3-기본코드">3) 기본코드</h3>
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include &lt;string&gt;
+#include &lt;vector&gt;
+</span>
+<span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
+
+<span class="kt">bool</span> <span class="nf">solution</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">phone_book</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kt">bool</span> <span class="n">answer</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
+    <span class="k">return</span> <span class="n">answer</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<p><br /><br /></p>
+
+<h2 id="2-알고리즘-생각해보자">2. 알고리즘! 생각해보자</h2>
+<p>1) multimap, set 자료구조(“key, value” pair) 사용<br />
+2) multimap, set 초기화<br />
+3) 경우의 수 계산<br />
+<br /><br /></p>
+
+<h2 id="3-해결코드">3. 해결코드</h2>
+<p>[C++]<br /></p>
+
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include &lt;string&gt;
+#include &lt;vector&gt;
+#include &lt;map&gt;
+#include &lt;set&gt;
+</span>
+<span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
+
+<span class="kt">int</span> <span class="nf">solution</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;&gt;</span> <span class="n">clothes</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kt">int</span> <span class="n">answer</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+
+    <span class="c1">// 1.set, multipmap 초기화(clothes 벡터 이용)</span>
+    <span class="n">multimap</span><span class="o">&lt;</span><span class="n">string</span><span class="p">,</span> <span class="n">string</span><span class="o">&gt;</span> <span class="n">c_temp</span><span class="p">;</span>
+    <span class="n">set</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">key</span><span class="p">;</span>
+    <span class="n">set</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;::</span><span class="n">iterator</span> <span class="n">iter</span><span class="p">;</span>
+
+    <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">i</span><span class="o">&lt;</span><span class="n">clothes</span><span class="p">.</span><span class="n">size</span><span class="p">();</span> <span class="n">i</span><span class="o">++</span><span class="p">){</span>
+        <span class="n">c_temp</span><span class="p">.</span><span class="n">insert</span><span class="p">(</span><span class="n">pair</span><span class="o">&lt;</span><span class="n">string</span><span class="p">,</span> <span class="n">string</span><span class="o">&gt;</span><span class="p">(</span><span class="n">clothes</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span> <span class="n">clothes</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]));</span>
+        <span class="n">key</span><span class="p">.</span><span class="n">insert</span><span class="p">(</span><span class="n">clothes</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">]);</span>
+    <span class="p">}</span>
+
+    <span class="c1">// 2.의상 조합 경우의 수 계산</span>
+    <span class="k">for</span><span class="p">(</span><span class="n">iter</span><span class="o">=</span><span class="n">key</span><span class="p">.</span><span class="n">begin</span><span class="p">();</span> <span class="n">iter</span> <span class="o">!=</span> <span class="n">key</span><span class="p">.</span><span class="n">end</span><span class="p">();</span> <span class="o">++</span><span class="n">iter</span><span class="p">){</span>
+        <span class="n">answer</span> <span class="o">=</span> <span class="n">answer</span><span class="o">*</span><span class="p">(</span><span class="n">c_temp</span><span class="p">.</span><span class="n">count</span><span class="p">(</span><span class="o">*</span><span class="n">iter</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="n">answer</span> <span class="o">=</span> <span class="n">answer</span><span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+
+    <span class="k">return</span> <span class="n">answer</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<p><br /><br /></p>
+
+<h2 id="4-문제해결능력-up-되짚어보기">4. 문제해결능력 UP! 되짚어보기</h2>
+<ul>
+  <li>의상 조합 경우의 수 계산_ 단순하게 생각하기!</li>
+  <li>map과 set의 연관성 생각해보기<br />
+- map: key와 value pair<br />
+- set: key 값들</li>
+</ul>
+
+<p><br /><br /></p>
+
+<h2 id="5-references">5. References</h2>
+<p>1) 공식 C++ References (<a href="https://modoocode.com/241">https://modoocode.com/241</a>)
+<br /><br /></p>
+:ET
