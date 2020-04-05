@@ -1,0 +1,135 @@
+I"�<ul>
+  <li>목표: 웹 페이지 다운로드</li>
+  <li>주요도구 및 라이브러리: Node.js, Rhino, Nashorn</li>
+</ul>
+
+<hr />
+<p>     ※ 해당 포스트는 “자바스크립트와 Node.js를 이용한 웹 크롤링 테크닉” 도서를 기반으로 하고 있습니다. <br />
+         문제가 될 경우 삭제하도록 하겠습니다.<br />
+     ※ 글 내용 중에 미흡한 부분이 있을 수 있습니다. ^^ 댓글로 남겨주세요!<br /></p>
+
+<hr />
+
+<p><br />
+프로젝트 시작을 알리는 첫번째 챕터! Node.js를 활용하여 웹 페이지를 다운로드 해보자. 아래의 코드는 <a href="https://github.com/Jpub/JSWebCrawler">JPub Github</a>에서 다운로드 가능하다.<br /><br /></p>
+
+<h2 id="1-웹-페이지-다운로드">1. 웹 페이지 다운로드</h2>
+<hr />
+<h3 id="1-기본코드">1) 기본코드</h3>
+<pre><code class="language-node.js">// url 에 있는 파일을 savepath 에 다운로드한다
+// 다운로드할 URL을 지정
+// var url = "http://www.naver.com/";
+var url = "http://hisnet.handong.edu/";
+
+// 저장할 위치를 지정
+var savepath = "test.html";
+
+// 사용 모듈 정의 ---- (※ 1)
+var http = require('http'); // HTTP 모듈
+var fs = require('fs'); // 파일처리 관련 모듈
+
+// 출력 지정 --- (※ 2)
+var outfile = fs.createWriteStream(savepath);
+
+// 비동기로 URL의 파일 다운로드 --- (※ 3)
+http.get(url, function(res) {
+    res.pipe(outfile); // --- (※ 4)
+    res.on('end', function () { // --- (※ 5)
+        outfile.close();
+        console.log("ok");
+    });
+});
+</code></pre>
+<p>위의 코드를 실행하면 test.html 파일이 생성된다. url 변수에 <a href="http://www.naver.com/">Naver 주소</a>를 입력한 경우, test.html 파일에서 302 Found 결과를 얻을 수 있었다. 302는 Redirect로, 요청한 리소스가 임시적으로 새로운 URL로 이동했음(Temporarily Moved)을 나타낸다. 해당 주소는 http이고, 현재 Naver 홈페이지는 https이기 때문에 302 Found와 같은 결과를 얻은 것 같다.<br /></p>
+
+<p>다음으로 url 변수에 <a href="http://hisnet.handong.edu/">한동대학교 주소</a>를 입력한 경우,</p>
+
+<p>출처: https://nsinc.tistory.com/168 [NakedStrength]</p>
+<h3 id="2-함수화된-코드">2) 함수화된 코드</h3>
+<p>위의 기본코드를 함수화하여 리팩토링한 코드이다.</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>// 다운로드
+download(
+  "http://jpub.tistory.com/539",
+  "spring.html",
+  function(){ console.log("ok, spring."); });
+
+download(
+  "http://jpub.tistory.com/537",
+  "angular.html",
+  function(){ console.log("ok, angular."); });
+
+// url 의 파일을 savepath 에 다운로드하는 함수
+function download(url, savepath, callback) {
+  var http = require('http');
+  var fs = require('fs');
+  var outfile = fs.createWriteStream(savepath);
+
+  var req = http.get(url, function(res) {
+    res.pipe(outfile);
+    res.on('end', function () {
+      outfile.close();
+      callback();
+    });
+  });
+}
+</code></pre></div></div>
+
+<h3 id="3-vagrant-기본-사용을-위한-명령어">3) Vagrant 기본 사용을 위한 명령어</h3>
+<table border="1" bordercolor="black" width="60%">
+  <tr style="background-color:#e3e3e3">
+    <th>명령어</th>
+    <th>설명</th>
+  </tr>
+  <tr>
+    <td align="center">vagrant up</td>
+    <td align="center">가상머신 On</td>
+  </tr>
+  <tr>
+    <td align="center">vagrant halt</td>
+    <td align="center">가상머신 Off</td>
+  </tr>
+  <tr>
+    <td align="center">vagrant reload</td>
+    <td align="center">가상머신 Re-On</td>
+  </tr>
+  <tr>
+    <td align="center">vagrant suspend</td>
+    <td align="center">가상머신 정지</td>
+  </tr>
+  <tr>
+    <td align="center">vagrant resume</td>
+    <td align="center">가상머신 정지에서 복원</td>
+  </tr>
+  <tr>
+    <td align="center">vagrant status</td>
+    <td align="center">가상머신 상태 확인</td>
+  </tr>
+  <tr>
+    <td align="center">vagrant destroy</td>
+    <td align="center">가상머신 삭제</td>
+  </tr>
+  <tr>
+    <td align="center">vagrant ssh</td>
+    <td align="center">가상머신 로그인</td>
+  </tr>
+</table>
+<p><br /><br /></p>
+
+<h1 id="2nodejs-설치">2.Node.JS 설치</h1>
+<hr />
+<p>다음 포스트(<a href="https://blog.stories.pe.kr/225">Node.js 설치방법</a>)에서 친절한 설명과 함께 다루고 있다.</p>
+<ul>
+  <li>Node.js란? 자바스크립트의 엔진</li>
+  <li>npm이란? 노드(Node.js)의 패키지/모듈 관리자</li>
+  <li>nvm이란? 노드(Node.js)의 버전 관리자</li>
+</ul>
+
+<p>다음 글에서는 본격적으로 Node.js를 활용한 웹 데이터 수집을 진행할 것이다.<br />
+<br /><br /></p>
+
+<h2 id="3-references">3. References</h2>
+<hr />
+<p>1) <a href="http://www.yes24.com/Product/Goods/34907983?scode=032&amp;OzSrank=1">도서_자바스크립트와 Node.js를 이용한 웹 크롤링 테크닉</a><br />
+2) <a href="https://blog.stories.pe.kr/225">Node.js설치 및 환경설정</a>
+<br /><br /></p>
+:ET
