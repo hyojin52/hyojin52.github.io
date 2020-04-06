@@ -2,13 +2,13 @@
 layout: post
 title: "POSCO 청년 AI, BigData 아카데미"
 date: 2020-04-06
-categories: Programmers Hash C++
+categories: POSCO AI BigData YABA
 ---
 
 - 신청기간: 2020-04-20 ~ 2020-05-06
 - 주제: AI 및 BigData 교육<br/><br/>
 
-포스코 공채 지원을 위해 열심히 인터넷 검색을 하던 중, 포스코의 "청년 AI, BigData 아카데미"에 대해 알게되었다. 컴퓨터공학 전공으로 졸업했지만, AI나 빅데이터 분야에 대한 공부를 하지 못했던 것이 아쉬웠는데 이번 기회를 통해 체계적으로 공부하기 위해 지원하고자 한다.<br/>
+포스코 공채 지원을 위해 열심히 인터넷 검색을 하던 중, 포스코의 "청년 AI, BigData 아카데미(YABA:Youth AI BigData Academy, 내맘대로 줄이기 ㅋㅋㅋ)"에 대해 알게되었다. 컴퓨터공학 전공으로 졸업했지만, AI나 빅데이터 분야에 대한 공부를 하지 못했던 것이 아쉬웠는데 이번 기회를 통해 체계적으로 공부하기 위해 지원하고자 한다.<br/>
 
 ![posco_ai_bigdata_academy](/assets/img/posco_ai_bigdata_academy/posco_ai_bigdata_academy.png)
 
