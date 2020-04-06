@@ -51,7 +51,7 @@ http.get(url, function(res) {
 
 다음으로 url 변수에 [한동대학교 주소](http://hisnet.handong.edu/)를 입력한 경우, 아래와 같은 test.html 파일을 생성하였다.
 
-![result](/assets/img/web_crawling/02-01-result.png)
+![result](/assets/img/web_crawling/02-01-result.PNG)
 <br/>
 
 ### 2) 함수화한 코드
