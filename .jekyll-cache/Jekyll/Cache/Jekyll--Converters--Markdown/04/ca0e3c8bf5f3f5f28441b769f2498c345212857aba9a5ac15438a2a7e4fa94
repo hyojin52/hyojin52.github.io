@@ -1,0 +1,146 @@
+I" 7<ul>
+  <li>신청기간: 2020-04-20 ~ 2020-05-06</li>
+  <li>주제: AI 및 BigData 교육</li>
+  <li><a href="http://youth.posco.com/posco/edu/index.php?mod=education&amp;pag=education01#posco">링크 바로가기</a><br /><br /></li>
+</ul>
+
+<p>포스코 공채 지원을 위해 열심히 인터넷 검색을 하던 중, 포스코의 “청년 AI, BigData 아카데미”에 대해 알게되었다. 컴퓨터공학 전공으로 졸업했지만, AI나 빅데이터 분야에 대한 공부를 하지 못했던 것이 아쉬웠는데 이번 기회를 통해 체계적으로 공부해보고 싶어 지원하고자 한다.<br /></p>
+
+<p>삼성에서 진행하는 SAFFY와 비슷한 프로그램이긴하지만, 포스코에서 주최하는 “청년 AI, BigData 아카데미”는 세 가지 면에서 차별점이 있다고 생각한다.</p>
+
+<ol>
+  <li>AI와 BigData라는 주제에 특화된 프로그램</li>
+  <li>무상교육뿐만 아니라, 교육수당 제공 ++ “숙식(기숙사!!) 제공”</li>
+</ol>
+
+<h2 id="1-문제">1. 문제</h2>
+<h3 id="1-완주하지-못한-선수">1) 완주하지 못한 선수</h3>
+<p>수많은 마라톤 선수들이 마라톤에 참여하였습니다. 단 한 명의 선수를 제외하고는 모든 선수가 마라톤을 완주하였습니다. 마라톤에 참여한 선수들의 이름이 담긴 배열 participant와 완주한 선수들의 이름이 담긴 배열 completion이 주어질 때, 완주하지 못한 선수의 이름을 return 하도록 solution 함수를 작성해주세요.<br /></p>
+
+<h3 id="2-제한사항">2) 제한사항</h3>
+<ul>
+  <li>마라톤 경기에 참여한 선수의 수는 1명 이상 100,000명 이하입니다.<br /></li>
+  <li>길이는 participant의 길이보다 1 작습니다.<br /></li>
+  <li>참가자의 이름은 1개 이상 20개 이하의 알파벳 소문자로 이루어져 있습니다.<br /></li>
+  <li>참가자 중에는 동명이인이 있을 수 있습니다.<br /></li>
+</ul>
+
+<h3 id="3-기본코드">3) 기본코드</h3>
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include &lt;string&gt;
+#include &lt;vector&gt;
+</span>
+<span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
+
+<span class="n">string</span> <span class="nf">solution</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">participant</span><span class="p">,</span> <span class="n">vector</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">completion</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">string</span> <span class="n">answer</span> <span class="o">=</span> <span class="s">""</span><span class="p">;</span>
+    <span class="k">return</span> <span class="n">answer</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<p><br /></p>
+
+<h2 id="2-알고리즘-생각해보자">2. 알고리즘! 생각해보자</h2>
+<p>1) participant와 completion에 담긴 이름을 모두 비교한다. (반복문)</p>
+<ul>
+  <li>participant와 completion에 모두 이름이 있다면, 해당 이름을 participant와 completion에서 삭제한다.</li>
+  <li>그렇지 않다면, 반복문 continue</li>
+</ul>
+
+<p>2) participant에 남아있는 이름을 answer에 추가하여 return
+<br /><br /></p>
+
+<h2 id="3-해결코드">3. 해결코드</h2>
+<p>[C++]<br /></p>
+
+<p>1) 초반코드(정확성_통과, 효율성_실패)</p>
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include &lt;string&gt;
+#include &lt;vector&gt;
+#include &lt;iostream&gt;
+</span>
+<span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
+
+<span class="n">string</span> <span class="nf">solution</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">participant</span><span class="p">,</span> <span class="n">vector</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">completion</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">string</span> <span class="n">answer</span> <span class="o">=</span> <span class="s">""</span><span class="p">;</span>
+
+    <span class="kt">int</span> <span class="n">p_id</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">c_id</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+    <span class="k">for</span><span class="p">(</span><span class="n">p_id</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">p_id</span><span class="o">&lt;</span><span class="n">participant</span><span class="p">.</span><span class="n">size</span><span class="p">();</span> <span class="n">p_id</span><span class="o">++</span><span class="p">){</span>
+        <span class="k">for</span><span class="p">(</span><span class="n">c_id</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">c_id</span><span class="o">&lt;</span><span class="n">completion</span><span class="p">.</span><span class="n">size</span><span class="p">();</span> <span class="n">c_id</span><span class="o">++</span><span class="p">){</span>
+            <span class="k">if</span><span class="p">(</span><span class="n">participant</span><span class="p">[</span><span class="n">p_id</span><span class="p">].</span><span class="n">compare</span><span class="p">(</span><span class="n">completion</span><span class="p">[</span><span class="n">c_id</span><span class="p">])</span> <span class="o">==</span> <span class="mi">0</span><span class="p">){</span>
+                <span class="n">participant</span><span class="p">[</span><span class="n">p_id</span><span class="p">]</span> <span class="o">=</span> <span class="s">""</span><span class="p">;</span>
+                <span class="n">completion</span><span class="p">[</span><span class="n">c_id</span><span class="p">]</span> <span class="o">=</span> <span class="s">""</span><span class="p">;</span>
+                <span class="k">break</span><span class="p">;</span>
+            <span class="p">}</span>
+        <span class="p">}</span>        
+    <span class="p">}</span>
+
+    <span class="k">for</span><span class="p">(</span><span class="n">p_id</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">p_id</span><span class="o">&lt;</span><span class="n">participant</span><span class="p">.</span><span class="n">size</span><span class="p">();</span><span class="n">p_id</span><span class="o">++</span><span class="p">){</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">participant</span><span class="p">[</span><span class="n">p_id</span><span class="p">].</span><span class="n">compare</span><span class="p">(</span><span class="s">""</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span> <span class="p">){</span>
+            <span class="n">answer</span><span class="p">.</span><span class="n">assign</span><span class="p">(</span><span class="n">participant</span><span class="p">[</span><span class="n">p_id</span><span class="p">]);</span>
+            <span class="k">break</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="k">return</span> <span class="n">answer</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<p>아래와 같은 <strong>문제점</strong> 이 있음을 발견했다.<br /></p>
+<ul>
+  <li>문제의 주제인 <u>해시</u> 개념 미사용</li>
+  <li>다중 반복문 사용으로 <u>효율성</u>이 떨어짐</li>
+</ul>
+
+<p>문제점을 보완하여 다음과 같이 map 자료형을 이용하여 수정해보았다.<br /></p>
+
+<p>2) 수정코드(정확성_통과, 효율성_통과)</p>
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include &lt;string&gt;
+#include &lt;vector&gt;
+#include &lt;map&gt;
+</span>
+<span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
+
+<span class="n">string</span> <span class="nf">solution</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">participant</span><span class="p">,</span> <span class="n">vector</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">completion</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">string</span> <span class="n">answer</span> <span class="o">=</span> <span class="s">""</span><span class="p">;</span>
+
+    <span class="n">map</span><span class="o">&lt;</span><span class="n">string</span><span class="p">,</span> <span class="kt">int</span><span class="o">&gt;</span> <span class="n">temp</span><span class="p">;</span>
+
+    <span class="c1">//1.map 초기화</span>
+    <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">i</span><span class="o">&lt;</span><span class="n">participant</span><span class="p">.</span><span class="n">size</span><span class="p">();</span> <span class="n">i</span><span class="o">++</span><span class="p">){</span>
+        <span class="c1">//1-1.key = participant에 담긴 이름, value = participant에 담긴 이름의 횟수</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">temp</span><span class="p">.</span><span class="n">count</span><span class="p">(</span><span class="n">participant</span><span class="p">[</span><span class="n">i</span><span class="p">])</span><span class="o">==</span><span class="mi">0</span><span class="p">)</span>
+            <span class="n">temp</span><span class="p">.</span><span class="n">insert</span><span class="p">(</span><span class="n">pair</span><span class="o">&lt;</span><span class="n">string</span><span class="p">,</span> <span class="kt">int</span><span class="o">&gt;</span><span class="p">(</span><span class="n">participant</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="mi">1</span><span class="p">));</span>
+        <span class="k">else</span>
+            <span class="p">(</span><span class="n">temp</span><span class="p">.</span><span class="n">find</span><span class="p">(</span><span class="n">participant</span><span class="p">[</span><span class="n">i</span><span class="p">])</span><span class="o">-&gt;</span><span class="n">second</span><span class="p">)</span><span class="o">++</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="c1">//2.tmep와 completion 비교</span>
+    <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">i</span><span class="o">&lt;</span><span class="n">completion</span><span class="p">.</span><span class="n">size</span><span class="p">();</span> <span class="n">i</span><span class="o">++</span><span class="p">){</span>
+        <span class="c1">//2-1.completion 명단에 있다면 횟수 줄이기</span>
+        <span class="p">(</span><span class="n">temp</span><span class="p">.</span><span class="n">find</span><span class="p">(</span><span class="n">completion</span><span class="p">[</span><span class="n">i</span><span class="p">])</span><span class="o">-&gt;</span><span class="n">second</span><span class="p">)</span><span class="o">--</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="c1">//3. temp 확인하여 answer 도출</span>
+    <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">i</span><span class="o">&lt;</span><span class="n">participant</span><span class="p">.</span><span class="n">size</span><span class="p">();</span> <span class="n">i</span><span class="o">++</span><span class="p">){</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">temp</span><span class="p">.</span><span class="n">find</span><span class="p">(</span><span class="n">participant</span><span class="p">[</span><span class="n">i</span><span class="p">])</span><span class="o">-&gt;</span><span class="n">second</span> <span class="o">&gt;=</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="n">answer</span> <span class="o">=</span> <span class="n">participant</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+    <span class="p">}</span>
+
+    <span class="k">return</span> <span class="n">answer</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<p><br /></p>
+
+<h2 id="4-문제해결능력-up-되짚어보기">4. 문제해결능력 UP! 되짚어보기</h2>
+<ul>
+  <li>효율성을 높일 수 있도록 문제에 알맞은 자료형 선택하기</li>
+  <li>map, set, unordered_map, unordered_set의 차이점</li>
+  <li>다양한 풀이법(정렬&amp;비교 방법, multiset 자료형 이용 등)
+<br /><br /></li>
+</ul>
+
+<h2 id="5-references">5. References</h2>
+<p>1) vector 사용법 (<a href="https://blockdmask.tistory.com/70">https://blockdmask.tistory.com/70</a>)<br />
+2) map 사용법 (<a href="https://blockdmask.tistory.com/87">https://blockdmask.tistory.com/87</a>)<br />
+3) 공식 C++ References (<a href="https://modoocode.com/241">https://modoocode.com/241</a>)
+<br /><br /></p>
+:ET
