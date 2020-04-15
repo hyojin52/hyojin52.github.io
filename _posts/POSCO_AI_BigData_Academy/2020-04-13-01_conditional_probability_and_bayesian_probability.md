@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "POSCO YABA_확률및통계_01. 조건부확률과 베이지안이론"
+title: "확률및통계_01. 조건부확률과 베이지안이론"
 date: 2020-04-06
 categories: POSCO AI BigData YABA Probability Statistics
 ---

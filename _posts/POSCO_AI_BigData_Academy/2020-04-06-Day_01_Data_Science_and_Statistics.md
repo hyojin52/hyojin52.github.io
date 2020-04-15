@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "POSCO YABA_통계학입문_01. 데이터 과학과 통계"
+title: "통계학입문_01. 데이터 과학과 통계"
 date: 2020-04-06
 categories: POSCO AI BigData YABA DataScience Statistics
 ---
