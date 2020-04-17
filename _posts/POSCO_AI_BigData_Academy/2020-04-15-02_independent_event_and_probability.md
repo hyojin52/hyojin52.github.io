@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "확률및통계_02. 독립사건과 확률"
-date: 2020-04-06
+date: 2020-04-15
 categories: POSCO AI BigData YABA Probability Statistics
 ---
 

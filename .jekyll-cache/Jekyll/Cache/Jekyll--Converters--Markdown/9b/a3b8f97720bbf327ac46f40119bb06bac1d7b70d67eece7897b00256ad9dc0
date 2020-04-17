@@ -1,0 +1,80 @@
+I"H<p><a href="https://www.youtube.com/watch?v=yr0YUoteuO8&amp;list=PLSN_PltQeOyjmRIsC7VNirXOBqWoypd4V&amp;index=3">확률 및 통계 3강</a> Youtube에서 시청가능합니다.<br /><br /></p>
+
+<h2 id="22-definition-of-rvrandom-variable-확률변수">2.2 Definition of RV(Random Variable, 확률변수)</h2>
+<hr />
+<p>1) RV(Random Variable): real numbers mapped with each outcome of random experiment<br />
+EX) tossing a coin</p>
+<ul>
+  <li>앞면(H)이 나올 경우 1 mapping → H=1</li>
+  <li>뒷면(T)이 나올 경우 0 mapping → T=0</li>
+  <li>P(T)=P(0)=1/2</li>
+  <li>P(H)=P(1)=1/2</li>
+</ul>
+
+<p>2) 지금부터 probability를 function화</p>
+<ul>
+  <li>probability: P(A)에서 A는 event, case에 대한 확률을 의미</li>
+  <li>function f(x): 확률을 숫자로 mapping</li>
+</ul>
+
+<p>EX) tossing two coins</p>
+<ul>
+  <li>RV: number of heads(앞면) ⇒ 0, 1, 2</li>
+</ul>
+
+<p><img src="/assets/img/posco_ai_bigdata_academy/PS/03-01.jpg" alt="image" /><br /></p>
+
+<p>3) by the conventional notation of RV</p>
+<ul>
+  <li>X, Y, Z : set of x</li>
+  <li>x, y, z : a specific value of X</li>
+</ul>
+
+<p><br /><br /></p>
+
+<h2 id="23-event-defined-by-rv">2.3 Event defined by RV</h2>
+<hr />
+<p>1) Let  “Ax” be an event<br />
+<img src="/assets/img/posco_ai_bigdata_academy/PS/03-01.jpg" alt="image" /></p>
+
+<p><br /><br /></p>
+
+<h2 id="24-distribution-function">2.4 Distribution Function</h2>
+<hr />
+<p>1) for an RV x and a real number x, Cumulative Distribution(CDF) is defined like below picture.<br />
+<img src="/assets/img/posco_ai_bigdata_academy/PS/03-02.jpg" alt="image" /><br />
+2) features of CDF
+<img src="/assets/img/posco_ai_bigdata_academy/PS/03-03.jpg" alt="image" /><br /></p>
+<ul>
+  <li>EX 2.3</li>
+</ul>
+
+<p><img src="/assets/img/posco_ai_bigdata_academy/PS/03-04.jpg" alt="image" /><br />
+<br /><br /></p>
+
+<h2 id="25-discrete-rv">2.5 Discrete RV</h2>
+<p>1) discrete: non- continuous<br />
+2) Probability Mass Function(PMF)<br />
+<img src="/assets/img/posco_ai_bigdata_academy/PS/03-05.jpg" alt="image" /><br />
+3) graph of Probability Mass Function(PMF) &amp; Continuous Distribution Function(CDF)<br />
+<img src="/assets/img/posco_ai_bigdata_academy/PS/03-06.jpg" alt="image" /><br />
+3) delta(x) function<br />
+<img src="/assets/img/posco_ai_bigdata_academy/PS/03-07.jpg" alt="image" /><br />
+EX) 2 coins tossing<br />
+<img src="/assets/img/posco_ai_bigdata_academy/PS/03-08.jpg" alt="image" /><br /></p>
+<ul>
+  <li>PMF
+<img src="/assets/img/posco_ai_bigdata_academy/PS/03-09.jpg" alt="image" /><br /></li>
+  <li>CDF
+<img src="/assets/img/posco_ai_bigdata_academy/PS/03-10.jpg" alt="image" /><br />
+<a href=""></a>
+<br /><br /></li>
+</ul>
+
+<h2 id="references">References</h2>
+<hr />
+<ul>
+  <li><a href="https://www.youtube.com/watch?v=yr0YUoteuO8&amp;list=PLSN_PltQeOyjmRIsC7VNirXOBqWoypd4V&amp;index=3">확률 및 통계 3강</a>
+<br /><br /></li>
+</ul>
+:ET
